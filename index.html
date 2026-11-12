@@ -1,1 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Guylon Wardlow | Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Layout: sticky identity column on the left, scrolling sections on the right; stacks on phones. */
+  :root {
+    --bg: #ECEFEA;
+    --surface: #F6F8F4;
+    --ink: #17211D;
+    --muted: #55625B;
+    --line: #CBD2C9;
+    --accent: #2347E0;
+    --accent-ink: #FFFFFF;
 
+    --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --font-body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111614; --surface: #181E1B; --ink: #E5EAE3; --muted: #9AA79F;
+      --line: #2C3631; --accent: #8EA3FF; --accent-ink: #0E1230;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111614; --surface: #181E1B; --ink: #E5EAE3; --muted: #9AA79F;
+    --line: #2C3631; --accent: #8EA3FF; --accent-ink: #0E1230;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    padding-block: 40px 80px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  .wrap {
+    max-width: 1120px; margin: 0 auto;
+    display: grid; grid-template-columns: 290px minmax(0, 1fr); gap: 72px;
+  }
+
+  /* Identity column */
+  .id { align-self: start; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+  .eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+  h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.4rem, 5vw, 3.4rem); line-height: 1; letter-spacing: -.02em; margin: 10px 0 12px; text-wrap: balance; }
+  .role { font-size: 1.05rem; margin: 0; color: var(--muted); }
+  nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+  nav a { display: inline-block; padding: 4px 0; text-decoration: none; font-weight: 500; border-bottom: 2px solid transparent; }
+  nav a:hover { border-bottom-color: var(--accent); }
+  .links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-family: var(--font-mono); font-size: 13px; overflow-wrap: anywhere; }
+  .links a { text-decoration-color: var(--accent); text-underline-offset: 3px; }
+
+  /* Sections */
+  main { display: flex; flex-direction: column; gap: 88px; min-width: 0; }
+  section { scroll-margin-top: 24px; min-width: 0; }
+  h2 { font-family: var(--font-mono); font-weight: 500; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 28px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+  h3 { font-family: var(--font-display); font-weight: 600; font-size: 1.35rem; line-height: 1.2; margin: 0 0 6px; letter-spacing: -.01em; text-wrap: balance; }
+  p { margin: 0 0 1em; max-width: 65ch; }
+  .lead { font-family: var(--font-display); font-size: clamp(1.4rem, 2.6vw, 1.9rem); line-height: 1.3; font-weight: 500; letter-spacing: -.01em; max-width: 30ch; margin-bottom: 1.2em; text-wrap: balance; }
+
+  /* Projects */
+  .projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 28px; }
+  .project { display: flex; flex-direction: column; gap: 10px; min-width: 0; padding-top: 16px; border-top: 2px solid var(--accent); }
+  .meta { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin: 0; }
+  .project p { margin: 0; color: var(--muted); }
+
+  /* Experience, leadership & education rows */
+  .rows { display: flex; flex-direction: column; }
+  .row { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+  .row:first-child { padding-top: 0; }
+  .row:last-child { border-bottom: 0; }
+  .when { font-family: var(--font-mono); font-size: 13px; color: var(--muted); padding-top: 4px; }
+  .org { margin: 0 0 10px; color: var(--muted); }
+  .row ul { margin: 0; padding-left: 1.1em; display: flex; flex-direction: column; gap: 4px; max-width: 65ch; }
+  .row li::marker { color: var(--accent); }
+
+  /* Skills */
+  .skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+  .skills h3 { font-size: 1.05rem; }
+  .skills p { margin: 0; color: var(--muted); }
+
+  /* Awards */
+  .awards { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .awards li { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 24px; }
+  .awards .when { padding-top: 0; }
+
+  /* Contact */
+  .contact { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
+  .contact .big { font-family: var(--font-display); font-size: clamp(1.4rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -.02em; line-height: 1.1; margin: 0; overflow-wrap: anywhere; }
+  button.copy {
+    font: inherit; font-weight: 600; cursor: pointer;
+    background: var(--accent); color: var(--accent-ink);
+    border: 0; border-radius: 3px; padding: 10px 18px;
+  }
+  button.copy:hover { filter: brightness(1.08); }
+  .foot { margin-top: 24px; font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+
+  @media (max-width: 860px) {
+    .wrap { grid-template-columns: minmax(0, 1fr); gap: 48px; }
+    .id { position: static; }
+    nav ul { flex-direction: row; flex-wrap: wrap; gap: 4px 20px; }
+    main { gap: 64px; }
+  }
+  @media (max-width: 600px) {
+    .projects, .skills { grid-template-columns: minmax(0, 1fr); }
+    .row, .awards li { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="id">
+    <div>
+      <p class="eyebrow">Portfolio 2026</p>
+      <h1>Guylon Wardlow</h1>
+      <p class="role">Computer Science student based in New Orleans, LA</p>
+    </div>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#leadership">Leadership</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#awards">Awards</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <ul class="links">
+      <li><a href="mailto:Guywardlow05@gmail.com">Guywardlow05@gmail.com</a></li>
+      <li><a href="https://linkedin.com/Guylon-Wardlow" target="_blank" rel="noopener">LinkedIn.com/Guylon-Wardlow</a></li>
+    </ul>
+  </header>
+
+  <main>
+    <section id="about">
+      <h2>About</h2>
+      <p class="lead">Computer science student building apps, games, and tools for student entrepreneurs.</p>
+      <p>I am a Computer Science major at Dillard University in New Orleans, expected to graduate in May 2028. I work in Python and C++, and I am learning C# and Microsoft SQL as an IT programmer student worker at the Louisiana Supreme Court.</p>
+      <p>Outside class, I build for student founders. I am working on College Market, an app that helps student-owned businesses get seen, and I co-created HBCU Wall Street, a concept that won $1,000 at the Black Tech NOLA AI Hackathon &amp; Pitch. I also run Klover Worldwide, an independent streetwear brand.</p>
+    </section>
+
+    <section id="work">
+      <h2>Selected work</h2>
+      <div class="projects">
+        <article class="project">
+          <div>
+            <h3>HBCU Wall Street</h3>
+            <p class="meta">Feb–Mar 2026 · Project team · Black Tech NOLA AI Hackathon &amp; Pitch</p>
+          </div>
+          <p>Co-created an AI-powered platform concept that gives student entrepreneurs exposure, resources, and business growth tools. I contributed to product ideation, platform design, and development strategy, with attention to accessibility and scalability. Our pitch earned a $1,000 prize for innovation, execution, and pitch performance.</p>
+        </article>
+        <article class="project">
+          <div>
+            <h3>College Market</h3>
+            <p class="meta">2026 · Student entrepreneurship app</p>
+          </div>
+          <p>An app concept that increases visibility for student-owned businesses and connects campus entrepreneurs with customers. I contribute product ideas, platform planning, and user-focused features for student vendors and service providers.</p>
+        </article>
+        <article class="project">
+          <div>
+            <h3>HBCU Game Jam</h3>
+            <p class="meta">Feb 2026 · Atlanta, GA · Unity</p>
+          </div>
+          <p>Built a game in Unity with a teammate during a game design competition. I gained experience with graphic design and 2D and 3D platform concepts.</p>
+        </article>
+        <article class="project">
+          <div>
+            <h3>JA Startup Achievement Program</h3>
+            <p class="meta">Feb–Jun 2025 · New Orleans, LA · Participant</p>
+          </div>
+          <p>Developed and pitched a business concept, and earned a cash prize for innovation. The program built my practical knowledge of entrepreneurship, technology use, and business planning.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="experience">
+      <h2>Experience</h2>
+      <div class="rows">
+        <div class="row">
+          <div class="when">Fall 2026</div>
+          <div>
+            <h3>IT Programmer Student Worker</h3>
+            <p class="org">Louisiana Supreme Court, New Orleans, LA</p>
+            <ul>
+              <li>Learning C# programming and application development workflows.</li>
+              <li>Developing familiarity with Microsoft SQL and how databases are used to build and support applications.</li>
+              <li>Building foundational experience with programming logic, database concepts, and technical problem-solving in a professional IT environment.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="when">Jul 2026 – Present</div>
+          <div>
+            <h3>Residential Assistant</h3>
+            <p class="org">Dillard University, New Orleans, LA</p>
+            <ul>
+              <li>Help foster an inclusive residential community, organize engagement activities, and support resident concerns.</li>
+              <li>Assist with conflict resolution, policy enforcement, room inspections, and administrative documentation.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="when">Nov 2025 – Present</div>
+          <div>
+            <h3>Team Member</h3>
+            <p class="org">Whole Foods Market, New Orleans, LA</p>
+            <ul>
+              <li>Provide customer service in a fast-paced retail environment while solving problems, adapting to store technology, and maintaining accuracy.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="when">Jan – Feb 2025</div>
+          <div>
+            <h3>Intern, Super Bowl Field Cast</h3>
+            <p class="org">ROC Nation, New Orleans, LA</p>
+            <ul>
+              <li>Collaborated on stage infrastructure for the halftime show, demonstrating teamwork, technical coordination, and deadline management.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="when">Apr 2023 – Aug 2024</div>
+          <div>
+            <h3>Team Member</h3>
+            <p class="org">The Home Depot, Houston, TX</p>
+            <ul>
+              <li>Supported customers, logistics, and store organization while strengthening communication, reliability, and problem-solving.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="leadership">
+      <h2>Entrepreneurship &amp; leadership</h2>
+      <div class="rows">
+        <div class="row">
+          <div class="when">Ongoing</div>
+          <div>
+            <h3>Founder &amp; Owner</h3>
+            <p class="org">Klover Worldwide</p>
+            <ul>
+              <li>Founded and manage an independent streetwear brand, developing brand identity, product concepts, and marketing ideas.</li>
+              <li>Lead creative direction for apparel drops and brand storytelling, connecting fashion, culture, and the brand's values of faith, hope, and luck.</li>
+              <li>Build entrepreneurial experience across product development, promotion, customer engagement, and business planning.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="when">Ongoing</div>
+          <div>
+            <h3>Creative Director</h3>
+            <p class="org">Style Serve DU 1821 Association</p>
+            <ul>
+              <li>Support creative direction and student engagement through fashion and style-focused campus initiatives.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="when">Member</div>
+          <div>
+            <h3>Melanin Model Association</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <div class="skills">
+        <div>
+          <h3>Programming &amp; development</h3>
+          <p>Python, C++, C# (familiarity), Microsoft SQL (learning), application development, Unity familiarity, 2D and 3D game development concepts</p>
+        </div>
+        <div>
+          <h3>IT &amp; professional</h3>
+          <p>Troubleshooting, data entry, system organization, problem-solving, teamwork, customer support, adaptability, attention to detail</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <h2>Education</h2>
+      <div class="rows">
+        <div class="row">
+          <div class="when">Expected May 2028</div>
+          <div>
+            <h3>B.S. in Computer Science</h3>
+            <p class="org">Dillard University, New Orleans, LA</p>
+            <ul>
+              <li>GPA: 3.3 / 4.0</li>
+              <li>Relevant coursework: Introduction to Programming I and II, Introduction to Microcomputers, Data Structures, Unix Operating Systems, Design and Analysis of Computer Algorithms</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="awards">
+      <h2>Awards &amp; honors</h2>
+      <ul class="awards">
+        <li><span class="when">2026</span><span>Black Tech NOLA AI Hackathon &amp; Pitch, $1,000 Innovation Prize</span></li>
+        <li><span class="when">2026</span><span>Honor Roll Award</span></li>
+        <li><span class="when">2026</span><span>JA Startup Achievement Program</span></li>
+        <li><span class="when">2025</span><span>Super Bowl Field Cast</span></li>
+      </ul>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <div class="contact">
+        <p>The best way to reach me is email.</p>
+        <p class="big" id="email">Guywardlow05@gmail.com</p>
+        <button class="copy" id="copy" type="button">Copy email</button>
+        <p class="foot">&copy; 2026 Guylon Wardlow</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+  var btn = document.getElementById("copy");
+  var emailEl = document.getElementById("email");
+  btn.addEventListener("click", function () {
+    var text = emailEl.textContent.trim();
+    function done() {
+      btn.textContent = "Copied";
+      setTimeout(function () { btn.textContent = "Copy email"; }, 1800);
+    }
+    function fallback() {
+      var r = document.createRange();
+      r.selectNodeContents(emailEl);
+      var s = window.getSelection();
+      s.removeAllRanges();
+      s.addRange(r);
+      btn.textContent = "Press Ctrl+C";
+    }
+    try {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } catch (e) { fallback(); }
+  });
+</script>
+</body>
+</html>
